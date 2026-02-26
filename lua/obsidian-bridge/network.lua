@@ -167,7 +167,7 @@ M.execute_command_by_name = function(final_config, api_key, command_name)
 end
 
 M.open_in_obsidian = function(filename, final_config, api_key)
-	local path = utils.EncodeURI("/open/" .. filename)
+	local path = utils.EncodeURI("/open/" .. utils.normalize_filename_for_mac(filename))
 	make_api_call(final_config, api_key, "POST", path)
 end
 

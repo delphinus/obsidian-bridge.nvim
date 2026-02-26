@@ -88,4 +88,13 @@ M.getVaultName = function(path)
 	return false
 end
 
+-- Normalize macOS NFD filenames to NFC before sending to Obsidian REST API.
+-- macOS returns filenames in NFD (decomposed) form, which causes Obsidian's
+-- REST API to fail to match against its NFC-indexed paths. Uses vim.fn.iconv
+-- with macOS-specific "utf-8-mac" encoding.
+-- On non-macOS platforms, returns the string as-is.
+M.normalize_filename_for_mac = function(str)
+	return vim.fn.has("mac") == 1 and vim.fn.iconv(str, "utf-8-mac", "utf-8") or str
+end
+
 return M
